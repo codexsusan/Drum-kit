@@ -1,17 +1,12 @@
-
-
-for (var i = 0; i < document.querySelectorAll(".drum").length; i++) {
-    document.querySelectorAll("button")[i].addEventListener("click", clickHandler);
-}
+// Plays Audio function
 
 function AudioPlay(sound) {
     var audio = new Audio(sound);
     audio.play();
 }
 
-function clickHandler() {
-
-    switch (this.innerHTML) {
+function playaudio(x) {
+    switch (x) {
         case 'w':
             AudioPlay("sounds/tom-1.mp3");
             break;
@@ -34,11 +29,40 @@ function clickHandler() {
             AudioPlay("sounds/snare.mp3");
             break;
         default:
-
+            console.log(x);
     }
-    // console.log(this.innerHTML);
+}
 
-    // this.style.color = "white";
+// Click / Button Press Action Handler
 
+for (var i = 0; i < document.querySelectorAll(".drum").length; i++) {
+    document.querySelectorAll("button")[i].addEventListener("click", clickHandler);
+}
+
+function clickHandler() {
+
+    var clicked = this.innerHTML;
+    playaudio(clicked);
+    buttonAnimation(clicked);
+}
+
+// Keyboard Action Listener 
+
+document.addEventListener("keypress", keyHandler);
+
+function keyHandler(character) {
+    playaudio(character.key);
+    buttonAnimation(character.key);
+}
+
+// Button Animation On Click
+
+function buttonAnimation(currentKey) {
+    var currentButton = document.querySelector("." + currentKey);
+    currentButton.classList.toggle("pressed");
+
+    setTimeout(function () {
+        currentButton.classList.toggle("pressed");
+    }, 300);
 
 }
